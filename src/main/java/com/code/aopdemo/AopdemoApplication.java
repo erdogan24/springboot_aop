@@ -20,6 +20,12 @@ public class AopdemoApplication {
 			demoTheBeforeAdvice(theAccountDAO);
 		};
 	}
+
+	private void demoTheBeforeAdvice(AccountDAO theAccountDAO) {
+
+		// call the business method
+		theAccountDAO.addAccount();
+	}
 }
 
 
