@@ -10,28 +10,28 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class AopdemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AopdemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AopdemoApplication.class, args);
+    }
 
 
-	@Bean
-	public CommandLineRunner commandLineRunner(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO){
-		return runner -> {
-			demoTheBeforeAdvice(theAccountDAO, theMembershipDAO);
-		};
-	}
+    @Bean
+    public CommandLineRunner commandLineRunner(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
+        return runner -> {
+            demoTheBeforeAdvice(theAccountDAO, theMembershipDAO);
+        };
+    }
 
-	private void demoTheBeforeAdvice(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
+    private void demoTheBeforeAdvice(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
 
-		// call the business method
-		Account myAccount = new Account();
-		theAccountDAO.addAccount(myAccount);
+        // call the business method
+        Account myAccount = new Account();
+        theAccountDAO.addAccount(myAccount);
 
-		// call the membership business method
-		theMembershipDAO.addSillyMember();
+        // call the membership business method
+        theMembershipDAO.addSillyMember();
 
-	}
+    }
 }
 
 
