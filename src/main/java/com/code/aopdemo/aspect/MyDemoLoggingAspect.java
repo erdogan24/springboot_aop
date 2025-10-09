@@ -21,25 +21,38 @@ public class MyDemoLoggingAspect {
     @AfterReturning(
             pointcut = "execution(* com.code.aopdemo.dao.AccountDAO.findAccounts(..))",
             returning = "result")
-    public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<Account> result){
+    public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<Account> result) {
 
-            // print out which method we are advising on
-            String method = theJoinPoint.getSignature().toShortString();
-            System.out.println("====>>> Executing @AfterReturning on method: " + method);
+        // print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("====>>> Executing @AfterReturning on method: " + method);
 
 
-            // print out the results of the method call
-            System.out.println("====>>> result is : " + result);
+        // print out the results of the method call
+        System.out.println("====>>> result is : " + result);
 
-            // let's post-process the data ... let's modify it
+        // let's post-process the data ... let's modify it
 
-            // convert the account name to uppercase
-            convertAccountNamesToUpperCase(result);
+        // convert the account name to uppercase
+        convertAccountNamesToUpperCase(result);
 
+        System.out.println("====>>> result is : " + result);
 
     }
 
     private void convertAccountNamesToUpperCase(List<Account> result) {
+
+        // loop through  accounts
+        for (Account tempAccount : result) {
+
+            // get uppercase version of name
+            String theUpperName = tempAccount.getName().toUpperCase();
+
+            // update the name on the account
+            tempAccount.setName(theUpperName);
+
+
+        }
     }
 
     @Before("com.code.aopdemo.aspect.LuvAopExpressions.forDaoPackageNoGetterSetter()")
@@ -48,7 +61,7 @@ public class MyDemoLoggingAspect {
 
         // display the method signature
         MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
-        System.out.println("Method: "+ methodSignature);
+        System.out.println("Method: " + methodSignature);
 
 
         // display method arguments
@@ -57,10 +70,10 @@ public class MyDemoLoggingAspect {
         Object[] args = theJoinPoint.getArgs();
 
         // loop thru args
-        for (Object tempArg : args){
+        for (Object tempArg : args) {
             System.out.println(tempArg);
 
-            if(tempArg instanceof Account){
+            if (tempArg instanceof Account) {
 
                 // downcast and print Account specific stuff
                 Account theAccount = (Account) tempArg;
