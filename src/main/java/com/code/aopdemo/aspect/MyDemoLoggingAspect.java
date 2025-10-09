@@ -19,10 +19,27 @@ public class MyDemoLoggingAspect {
 
     // add a new advice for @AfterReturning on the findAccounts method
     @AfterReturning(
-            pointcut = "* com.code.aopdemo.dao.AccountDAO.findAccounts(..)",
+            pointcut = "execution(* com.code.aopdemo.dao.AccountDAO.findAccounts(..))",
             returning = "result")
     public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<Account> result){
 
+            // print out which method we are advising on
+            String method = theJoinPoint.getSignature().toShortString();
+            System.out.println("====>>> Executing @AfterReturning on method: " + method);
+
+
+            // print out the results of the method call
+            System.out.println("====>>> result is : " + result);
+
+            // let's post-process the data ... let's modify it
+
+            // convert the account name to uppercase
+            convertAccountNamesToUpperCase(result);
+
+
+    }
+
+    private void convertAccountNamesToUpperCase(List<Account> result) {
     }
 
     @Before("com.code.aopdemo.aspect.LuvAopExpressions.forDaoPackageNoGetterSetter()")
